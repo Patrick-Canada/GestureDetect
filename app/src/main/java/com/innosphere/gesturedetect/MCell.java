@@ -1,14 +1,24 @@
 package com.innosphere.gesturedetect;
 
 import android.content.Context;
+import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 /**
  * Created by gen on 2015-09-07.
  */
-public class MCell extends FrameLayout {
+public class MCell extends FrameLayout implements GestureDetector.OnGestureListener{
+
+    private final static String TAG="MCell";
+
+    private GestureDetectorCompat mDetector;
+
+
+    private  boolean isScrolling;
 
     public MCell(Context context) {
         super(context);
@@ -26,17 +36,74 @@ public class MCell extends FrameLayout {
     }
 
     public void init(){
-
+        mDetector = new GestureDetectorCompat(this.getContext(),this);
     }
 
     public boolean onInterceptTouchEvent(MotionEvent event){
-
-        return true;
+        return super.onInterceptTouchEvent(event);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-
+        mDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        Log.d(TAG,"onDown=======eX:"+e.getX()+"======eY:"+e.getY());
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+        Log.d(TAG,"onShowPress=======eX:"+e.getX()+"=====eY:"+e.getY());
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        Log.d(TAG,"onSingleTapUp=======");
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        Log.d(TAG,"onScroll=======distanceX:"+distanceX);
+        if (Math.abs(distanceX)>10){
+            isScrolling=true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+        Log.d(TAG,"onLongPress=======eX:"+e.getX()+"========eY:"+e.getY());
+        printSamples(e);
+        isScrolling=false;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        Log.d(TAG,"fling=======velocityX:"+velocityX+" velocityY:"+velocityY);
+        return false;
+    }
+
+    void printSamples(MotionEvent ev) {
+        final int historySize = ev.getHistorySize();
+        final int pointerCount = ev.getPointerCount();
+        for (int h = 0; h < historySize; h++) {
+            System.out.printf("At time %d:", ev.getHistoricalEventTime(h));
+            for (int p = 0; p < pointerCount; p++) {
+                System.out.printf("  pointer %d: (%f,%f)",
+                        ev.getPointerId(p), ev.getHistoricalX(p, h), ev.getHistoricalY(p, h));
+            }
+        }
+        System.out.printf("At time %d:", ev.getEventTime());
+        for (int p = 0; p < pointerCount; p++) {
+            System.out.printf("  pointer %d: (%f,%f)",
+                    ev.getPointerId(p), ev.getX(p), ev.getY(p));
+        }
+    }
+
 }

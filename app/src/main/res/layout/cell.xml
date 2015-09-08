@@ -1,37 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.innosphere.gesturedetect.MCell xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <com.daimajia.swipe.SwipeLayout
-        android:layout_height="match_parent"
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_height="match_parent"
+android:layout_width="match_parent"
+android:id="@+id/swipe_layout">
+<LinearLayout
+    android:id="@+id/bottom_wrapper"
+    android:layout_height="match_parent"
+    android:layout_width="48dp">
+    <TextView
+        android:id="@+id/delete"
+        android:text="Delete"
+        android:background="#C7C7CC"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:id="@+id/swipe_layout">
-        <LinearLayout
-            android:id="@+id/bottom_wrapper"
-            android:layout_height="match_parent"
-            android:layout_width="48dp">
-            <TextView
-                android:id="@+id/delete"
-                android:text="Delete"
-                android:background="#C7C7CC"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content">
-            <TextView
-                android:padding="10dp"
-                android:tag="Hover"
-                android:id="@+id/textView"
-                android:text="要有最樸素的生活和最遙遠的夢想，即使明天天寒地凍，山高水遠，路遠馬亡。"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </com.daimajia.swipe.SwipeLayout>
-
-
-</com.innosphere.gesturedetect.MCell>
+        android:layout_height="match_parent" />
+</LinearLayout>
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content">
+    <TextView
+        android:padding="10dp"
+        android:tag="Hover"
+        android:id="@+id/textView"
+        android:text="要有最樸素的生活和最遙遠的夢想，即使明天天寒地凍，山高水遠，路遠馬亡。"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+</com.daimajia.swipe.SwipeLayout>
