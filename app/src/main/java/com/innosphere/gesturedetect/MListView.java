@@ -56,6 +56,7 @@ public class MListView extends DynamicListView implements GestureDetector.OnGest
     @Override
     public boolean onTouchEvent(MotionEvent event){
         mDetector.onTouchEvent(event);
+        postEvent(event);
         return super.onTouchEvent(event);
     }
 
@@ -65,7 +66,7 @@ public class MListView extends DynamicListView implements GestureDetector.OnGest
         mDownX=(int)e.getX();
         mDownY=(int)e.getY();
         isScrolling=false;
-        downEvent=e;
+        downEvent=MotionEvent.obtain(e);
         return false;
     }
 
@@ -82,13 +83,9 @@ public class MListView extends DynamicListView implements GestureDetector.OnGest
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-
-
         if (Math.abs(distanceX)>10){
             if (!isScrolling){
-                MotionEvent motionEvent=MotionEvent.obtain(downEvent.getDownTime(),
-                        downEvent.getEventTime(),MotionEvent.ACTION_DOWN,
-                        downEvent.getRawX(),downEvent.getRawY(),downEvent.getMetaState());
+                MotionEvent motionEvent=MotionEvent.obtain(e1);
                 postEvent(motionEvent);
             }
             isScrolling=true;
@@ -104,7 +101,7 @@ public class MListView extends DynamicListView implements GestureDetector.OnGest
         View selectedView = getChildAt(itemNum);
         if (selectedView instanceof ViewGroup){
             ViewGroup group=(ViewGroup)selectedView;
-            group.dispatchTouchEvent(event);
+            group.onTouchEvent(event);
         }
     }
 
@@ -117,9 +114,7 @@ public class MListView extends DynamicListView implements GestureDetector.OnGest
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         Log.d(TAG,"fling=======velocityX:"+velocityX+" velocityY:"+velocityY);
         isScrolling=false;
-        MotionEvent motionEvent=MotionEvent.obtain(e2.getDownTime(),
-                e2.getEventTime(),MotionEvent.ACTION_UP,
-                e2.getX(),e2.getY(),e1.getMetaState());
+        MotionEvent motionEvent=MotionEvent.obtain(e2);
         postEvent(motionEvent);
         return false;
     }

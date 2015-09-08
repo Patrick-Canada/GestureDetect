@@ -8,6 +8,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
+import com.daimajia.swipe.SwipeLayout;
+
 /**
  * Created by gen on 2015-09-07.
  */
@@ -68,9 +70,12 @@ public class MCell extends FrameLayout implements GestureDetector.OnGestureListe
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        Log.d(TAG,"onScroll=======distanceX:"+distanceX);
+        Log.d(TAG, "onScroll=======distanceX:" + distanceX);
         if (Math.abs(distanceX)>10){
             isScrolling=true;
+
+            SwipeLayout swipeLayout=(SwipeLayout) this.findViewById(R.id.swipe_layout);
+            swipeLayout.scrollTo((int)e2.getX(),0);
         }
 
         return false;
@@ -79,31 +84,13 @@ public class MCell extends FrameLayout implements GestureDetector.OnGestureListe
     @Override
     public void onLongPress(MotionEvent e) {
         Log.d(TAG,"onLongPress=======eX:"+e.getX()+"========eY:"+e.getY());
-        printSamples(e);
         isScrolling=false;
     }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        Log.d(TAG,"fling=======velocityX:"+velocityX+" velocityY:"+velocityY);
+        Log.d(TAG, "fling=======velocityX:" + velocityX + " velocityY:" + velocityY);
         return false;
-    }
-
-    void printSamples(MotionEvent ev) {
-        final int historySize = ev.getHistorySize();
-        final int pointerCount = ev.getPointerCount();
-        for (int h = 0; h < historySize; h++) {
-            System.out.printf("At time %d:", ev.getHistoricalEventTime(h));
-            for (int p = 0; p < pointerCount; p++) {
-                System.out.printf("  pointer %d: (%f,%f)",
-                        ev.getPointerId(p), ev.getHistoricalX(p, h), ev.getHistoricalY(p, h));
-            }
-        }
-        System.out.printf("At time %d:", ev.getEventTime());
-        for (int p = 0; p < pointerCount; p++) {
-            System.out.printf("  pointer %d: (%f,%f)",
-                    ev.getPointerId(p), ev.getX(p), ev.getY(p));
-        }
     }
 
 }
