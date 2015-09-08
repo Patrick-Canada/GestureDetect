@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.daimajia.swipe.SwipeLayout;
@@ -75,7 +76,9 @@ public class MCell extends FrameLayout implements GestureDetector.OnGestureListe
             isScrolling=true;
 
             SwipeLayout swipeLayout=(SwipeLayout) this.findViewById(R.id.swipe_layout);
-            swipeLayout.scrollTo((int)e2.getX(),0);
+            int x= (int)swipeLayout.getTranslationX()+(int)distanceX;
+            swipeLayout.setTranslationX(x);
+
         }
 
         return false;

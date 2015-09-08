@@ -56,7 +56,6 @@ public class MListView extends DynamicListView implements GestureDetector.OnGest
     @Override
     public boolean onTouchEvent(MotionEvent event){
         mDetector.onTouchEvent(event);
-        postEvent(event);
         return super.onTouchEvent(event);
     }
 

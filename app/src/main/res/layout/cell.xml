@@ -20,7 +20,8 @@
         </LinearLayout>
         <LinearLayout
             android:layout_height="match_parent"
-            android:layout_width="wrap_content">
+            android:layout_width="wrap_content"
+            android:id="@+id/bottom_text">
             <TextView
                 android:padding="10dp"
                 android:tag="Hover"
